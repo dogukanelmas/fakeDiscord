@@ -1,12 +1,13 @@
 #pragma once
 
-#include <windows.h>
-#include <d2d1.h>
+#include "windecs.h"
 
 class Graphics {
+private:
 	ID2D1Factory* factory;
 	ID2D1HwndRenderTarget* renderTarget;
-	ID2D1SolidColorBrush* brush;
+	ID2D1SolidColorBrush* brush1;
+	ID2D1SolidColorBrush* brush2;
 public:
 	Graphics();
 	~Graphics();
@@ -23,4 +24,5 @@ public:
 
 	void ClearScreen(float r, float g, float b);
 	void DrawCircle(float x, float y, float radius, float r, float g, float b, float a);
+	void DrawButton(float x, float y, float width, float height, float radius, float r, float g, float b, float a);
 };
