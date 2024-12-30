@@ -6,6 +6,7 @@ Graphics* graphics;
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	switch (uMsg) {
+	/*
 	case (WM_PAINT): {
 		graphics->BeginDrawing();
 			graphics->ClearScreen(0.8f, 0.0f, 0.0f);
@@ -13,6 +14,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
 		break;
 	}
+	*/
 	case WM_CLOSE:
 		PostQuitMessage(31);
 		return 0;
@@ -67,6 +69,38 @@ int CALLBACK WinMain(
 	// We show the window.
 	ShowWindow(hWnd, nCmdShow);
 
+	float y = 0.0f;
+	float ySpeed = 0.0f;
+
+	MSG msg;
+	msg.message = WM_NULL;
+	
+	while (msg.message != WM_QUIT) {
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		else {
+			ySpeed += 1.0f;
+			y += ySpeed;
+			if (y > 500) {
+				y = 500;
+				ySpeed = -ySpeed;
+			}
+			if (labs(ySpeed) > 0) {
+				if(ySpeed > 0) ySpeed -= 0.2f;
+				if (ySpeed < 0) ySpeed += 0.2f;
+			}
+
+				graphics->BeginDrawing();
+					graphics->ClearScreen(0.0f, 0.0f, 0.5f);
+					graphics->DrawCircle(
+						375.0f, y, 50.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+				graphics->EndDrawing();
+		}
+	}
+
+	/*
 	// Message pump
 	MSG msg;
 	BOOL gResult;
@@ -80,6 +114,7 @@ int CALLBACK WinMain(
 	else {
 		return msg.wParam;
 	}
+	*/
 
 	delete graphics;
 
