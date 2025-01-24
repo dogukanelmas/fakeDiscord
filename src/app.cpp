@@ -2,14 +2,23 @@
 
 App::App()
 	:
-	wnd(800, 600, L"Fake Discord")
+	wnd(800, 600, L"Escord")
 {}
 
 int App::Init() {
+	//This could change
+	if (!network.initialize()) {
+		return -1;
+	}
+
 	while (true) {
 		if (const auto ecode = Window::ProccessMessages()) {
+			network.cleanup();
 			return *ecode;
 		}
+
+		network.checkNetworkEvents();
+
 		Update();
 	}
 }
@@ -20,6 +29,5 @@ App::~App()
 void App::Update() {
 	wnd.Gfx().BeginDrawing();
 		wnd.Gfx().ClearScreen(0.3f, 0.3f, 0.3f);
-		wnd.Gfx().DrawButton(300.0f, 260.0f, 200.0f, 80.0f, 10.0f, 0.2f, 0.2f, 0.2f, 1.0f);
 	wnd.Gfx().EndDrawing();
 }

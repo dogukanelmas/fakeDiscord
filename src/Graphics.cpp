@@ -66,16 +66,4 @@ void Graphics::ClearScreen(float r, float g, float b) {
 	renderTarget->Clear(D2D1::ColorF(r, g, b));
 }
 
-// A simple draw circle for testing.
-void Graphics::DrawCircle(float x, float y, float radius, float r, float g, float b, float a) {
-	brush1->SetColor(D2D1::ColorF(r, g, b, a));
-	renderTarget->DrawEllipse(D2D1::Ellipse(D2D1::Point2F(x, y), radius, radius), brush1, 3.0f);
-}
 
-void Graphics::DrawButton(float x, float y, float width, float height, float radius, float r, float g, float b, float a)
-{
-	brush1->SetColor(D2D1::ColorF(r - 0.1f, g - 0.1f, b - 0.1f, a));
-	brush2->SetColor(D2D1::ColorF(r, g, b, a));
-	renderTarget->FillRoundedRectangle(D2D1::RoundedRect(D2D1::RectF(x, y, x + width, y + height), radius, radius), brush2);
-	renderTarget->DrawRoundedRectangle(D2D1::RoundedRect(D2D1::RectF(x, y, x + width, y + height), radius, radius), brush1, 2.0f);
-}

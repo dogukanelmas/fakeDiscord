@@ -1,6 +1,7 @@
 #pragma once
 
-#include "window.h"
+#include "../include/window.h"
+#include "../include/network.h"
 
 class App {
 public:
@@ -12,4 +13,5 @@ private:
 	void Update();
 private:
 	Window wnd;
+	Network network;
 };

@@ -5,7 +5,6 @@ int CALLBACK WinMain(
 	HINSTANCE hPrevInstance,
 	LPSTR     lpCmdLine,
 	int       nCmdShow ) {
-	const wchar_t pClassName[] = L"fakeDiscord";
 	
 	return App{}.Init();
 }
