@@ -6,15 +6,19 @@
 
 class Server {
 public:
-	Server();
-	~Server();
+    Server();
+    ~Server();
 
-	bool start(const std::string& ip, int port);
-	void stop();
-	void handleConnections();
-	void broadcast(const std::string& message);
+    bool start(const std::string& ip, int port);
+    void stop();
+
+    // Called in a thread loop
+    void handleConnections();
+
+    // For host to broadcast messages
+    void broadcast(const std::string& message);
 
 private:
-	Socket listeningSocket;
-	std::vector<Socket> clientSockets;
+    Socket listeningSocket;
+    std::vector<Socket> clientSockets;
 };

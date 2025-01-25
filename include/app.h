@@ -5,13 +5,20 @@
 
 class App {
 public:
-	App();
-	int Init();
-	~App();
+    App();
+    int Init();
+    ~App();
 
 private:
-	void Update();
+    void Update();
+
+    // Helper to handle home screen actions
+    void HandleHomeActions();
+
+    // Helper to handle chat screen (sending test msg)
+    void HandleChatActions();
+
 private:
-	Window wnd;
-	Network network;
+    Window wnd;
+    Network network;
 };

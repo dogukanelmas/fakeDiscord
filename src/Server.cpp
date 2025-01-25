@@ -1,55 +1,49 @@
 #include "../include/Server.h"
+#include <Windows.h>
 
 Server::Server() {}
-
 Server::~Server() {
-	stop();
+    stop();
 }
 
-bool Server::start(const std::string& ip, int port)
-{
+bool Server::start(const std::string& ip, int port) {
     if (!listeningSocket.create(SOCK_STREAM)) {
-        // TODO: Give user a visible eror telling listening socket creation is failed.
         return false;
     }
-
     if (!listeningSocket.bind(ip, port)) {
-        // TODO: Give user a visible eror telling listening socket binding is failed. Give the user which port and ip is tried to be connected.
         return false;
     }
-
     if (!listeningSocket.listen()) {
-        // TODO: Give user a visible eror telling listening on socket is failed.
         return false;
     }
-
-    // TODO: Well the server is started and the user somehow needs to know it. Figure it out :b
+    MessageBoxA(nullptr, "Server started listening!", "Info", MB_OK);
     return true;
 }
 
-void Server::stop(){
+void Server::stop() {
     for (auto& client : clientSockets) {
         client.close();
     }
     clientSockets.clear();
     listeningSocket.close();
-    // TODO: Tell the user server is stopped somehow.
 }
 
 void Server::handleConnections() {
     SOCKET newClientSocket = listeningSocket.accept();
     if (newClientSocket != INVALID_SOCKET) {
         Socket client;
-        client.close(); 
+        client.setSocket(newClientSocket);
         clientSockets.push_back(client);
-        // TODO: Tell the host a new client is connected.
+
+        MessageBoxA(nullptr, "A new client connected!", "Info", MB_OK);
     }
 }
 
 void Server::broadcast(const std::string& message) {
     for (auto& client : clientSockets) {
         if (client.send(message) == SOCKET_ERROR) {
-            // TODO: If sending the mesage is failed, tell the host which client did not receive the message visibly.
+            // Optionally remove or handle the client
+            // MessageBoxA(nullptr, "Failed to broadcast to a client!", "Error", MB_OK);
         }
     }
 }

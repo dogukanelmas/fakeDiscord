@@ -6,21 +6,22 @@
 
 class Socket {
 public:
-	Socket();
-	~Socket();
+    Socket();
+    ~Socket();
 
-	SOCKET getSocket() const;
+    SOCKET getSocket() const;
+    void setSocket(SOCKET s);
 
-	bool create(int type = SOCK_STREAM);
-	bool bind(const std::string& ip, int port);
-	bool listen();
-	SOCKET accept();
-	bool connect(const std::string& ip, int port);
-	int send(const std::string& message);
-	int receive(char* buffer, int length);
+    bool create(int type = SOCK_STREAM);
+    bool bind(const std::string& ip, int port);
+    bool listen();
+    SOCKET accept();
+    bool connect(const std::string& ip, int port);
+    int send(const std::string& message);
+    int receive(char* buffer, int length);
 
-	void close();
+    void close();
 
 private:
-	SOCKET sock;
+    SOCKET sock;
 };

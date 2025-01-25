@@ -1,31 +1,25 @@
 #include "../include/Client.h"
+#include <Windows.h>
 
 Client::Client() {}
-
 Client::~Client() {
-	disconnect();
+    disconnect();
 }
 
-bool Client::connectToServer(const std::string& ip, int port)
-{
+bool Client::connectToServer(const std::string& ip, int port) {
     if (!clientSocket.create(SOCK_STREAM)) {
-        // TODO: Tell the user creating a client socket is failed.
         return false;
     }
-
     if (!clientSocket.connect(ip, port)) {
-        // TODO: Tell the client connecting the server at the given ip is failed.
         return false;
     }
-
-    // TODO: Tell the user the connection is made with the server at ip.
+    MessageBoxA(nullptr, "Client connected to server!", "Info", MB_OK);
     return true;
 }
 
-bool Client::sendMessage(const std::string& message)
-{
+bool Client::sendMessage(const std::string& message) {
     if (clientSocket.send(message) == SOCKET_ERROR) {
-        // TODO: Tell the client the message is failed to send.
+        MessageBoxA(nullptr, "Failed to send message!", "Error", MB_OK);
         return false;
     }
     return true;
@@ -38,15 +32,17 @@ std::string Client::receiveMessage() {
         return std::string(buffer, bytesReceived);
     }
     else if (bytesReceived == 0) {
-        // TODO: Tell the client the server closed te connection.
+        // Connection closed
+        // MessageBoxA(nullptr, "Server closed connection.", "Info", MB_OK);
     }
     else {
-        // TODO: Tell the client it has failed to receive message.
+        // Error
+        // MessageBoxA(nullptr, "Receive error!", "Error", MB_OK);
     }
     return "";
 }
 
 void Client::disconnect() {
     clientSocket.close();
-    // TODO: Give an indicator to the client that it has disconnected from the server.
+    // MessageBoxA(nullptr, "Client disconnected.", "Info", MB_OK);
 }
